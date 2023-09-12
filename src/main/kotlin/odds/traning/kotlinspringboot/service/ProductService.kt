@@ -32,8 +32,20 @@ class ProductService(
 
     fun getProducts(): List<ProductResponse> = productRepository.findAll().let { it.map { productEntity -> transformToProductResponse(productEntity) } }
 
-    fun updateProduct( entity: ProductEntity ): ProductResponse = transformToProductResponse(productRepository.save(entity))
-
+    fun updateProductById(productId: Int, request: ProductRequest): ProductResponse {
+        return if (productRepository.existsById(productId)) {
+            transformToProductResponse(
+                productRepository.save(
+                    ProductEntity(
+                        productId,
+                        request.name,
+                        request.price,
+                        request.description
+                    )
+                )
+            )
+        } else throw Exception("Product Id not found")
+    }
 }
 
 data class ProductResponse(
@@ -45,6 +57,6 @@ data class ProductResponse(
 
 data class ProductRequest(
     val name: String,
-    val price: Float,
+    val price: Double,
     val description: String?
 )
