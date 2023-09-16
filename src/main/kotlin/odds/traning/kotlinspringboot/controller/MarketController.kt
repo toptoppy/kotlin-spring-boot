@@ -12,21 +12,19 @@ class MarketController(
 
     @PostMapping("/products")
     fun addProduct(@RequestBody product: ProductRequest): ProductResponse {
-        TODO("Call service to add product")
+        return productService.addProduct(product)
     }
 
     @GetMapping("/products")
-    fun getProducts(): List<ProductResponse> {
-        TODO("Call service to get product")
-    }
+    fun getProducts(): List<ProductResponse> = productService.getProducts()
 
     @PutMapping("/products/{productId}")
     fun updateProduct(@PathVariable productId: Int, @RequestBody product: ProductRequest): ProductResponse {
-        TODO("Call service to update product")
+        return productService.updateProductById(productId, product)
     }
 
     @DeleteMapping("/products/{productId}")
-    fun deleteProduct(): Unit = TODO("Bonus, try if you can ?:)")
+    fun deleteProduct(@PathVariable productId: Int): Unit = productService.deleteProductById(productId)
 }
 
 

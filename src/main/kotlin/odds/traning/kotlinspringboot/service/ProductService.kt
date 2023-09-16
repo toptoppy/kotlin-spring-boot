@@ -10,16 +10,52 @@ import org.springframework.stereotype.Service
 class ProductService(
     private val productRepository: ProductRepository
 ) {
+    fun addProduct(product: ProductRequest): ProductResponse =
+        productRepository.save(
+            ProductEntity(
+                id = 0,
+                name = product.name,
+                price = addTaxToPrice(product.price ?: 0.0),
+                description = product.description ?: "",
+                stock = product.stock
+            )
+        ).let {
+            transformToProductResponse(it)
+        }
 
-    fun addProduct(product: ProductRequest): ProductResponse = TODO("Added new product and added tax to the price before save it to database")
-
-    fun getProducts(): List<ProductResponse> = TODO("Used findAll() from repository and transform the entity to be readable response for frontend ")
+    fun getProducts(): List<ProductResponse> =
+        productRepository.findAll().map { transformToProductResponse(it) }
 
     fun updateProductById(productId: Int, request: ProductRequest): ProductResponse =
-        TODO("Check if the data is existing before update, if it is update save it to the database. Otherwise, throw error")
+        if (productRepository.existsById(productId)) {
+            productRepository.save(
+                ProductEntity(
+                    id = productId,
+                    name = request.name,
+                    price = addTaxToPrice(request.price ?: 0.0),
+                    description = request.description ?: "",
+                    stock = request.stock
+                )
+            ).let { transformToProductResponse(it) }
+        } else throw Exception("Product id not found")
+
+    fun deleteProductById(productId: Int) =
+        if (productRepository.existsById(productId)) {
+            productRepository.deleteById(productId)
+        } else throw Exception("Product id not found")
 
     private fun addTaxToPrice(price: Double) = price * 1.07
 
     private fun transformToProductResponse(entity: ProductEntity): ProductResponse =
-        TODO("Transform response from database to be readable response for frontend")
+        entity
+            .let {
+                ProductResponse(
+                    it.id.toString(),
+                    it.name,
+                    it.price.toString(),
+                    it.description,
+                    it.stock.toString()
+                )
+            }
+
 }

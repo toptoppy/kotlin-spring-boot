@@ -1,6 +1,9 @@
 package odds.traning.kotlinspringboot.model
 
 data class ProductResponse(
-    //TODO:
-    val field: String // just a temp field, delete if you want
+    val id: String,
+    val name: String,
+    val price: String,
+    val description: String,
+    val stock: String
 )

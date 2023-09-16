@@ -6,19 +6,19 @@ main()
 
 // Basic Type
 fun basicTypes(): Any {
-    val int: Int = 1
-    val long: Long = 1L
+    val int = 1
+    val long = 1L
     val float: Float = 2.5f
     val double: Double = 20.00
     val string: String = "Marcin"
 
-    return int
-//    return long
+//    return int
+//    return float
 //    return float
 //    return double
-//    return string
+    return string
 }
-//basicTypes()
+basicTypes()
 
 // Declaring variable
 fun variable(): String {
@@ -45,13 +45,31 @@ fun stringTemplate() {
 //stringTemplate()
 
 // Collection
+
+data class DataCollection(
+    val first: String,
+    val last: String
+)
+
+
+
 fun collection() {
-    val lists = listOf(1,2,3,4)
+    val dataList = listOf(
+        DataCollection("top","toppy"),
+        DataCollection("Methi","tang"),
+        DataCollection("Jirate","ShowData"),
+        DataCollection("top2","toppy"),
+    )
+
+    println(dataList.toSet())
+
+    val lists = listOf(1,2,3,4,1)
     val mLists = mutableListOf(1,2,3,4)
 
+//    lists.last()
     mLists.add(5)
 
-    println(lists)
+    println(lists.toSet())
     println(mLists)
 
     setOf("A", "B", "C")
@@ -62,26 +80,37 @@ fun collection() {
     mapOf(1 to "A", 2 to "B")
     mutableMapOf(1 to "A", 2 to "B")
 }
-//collection()
+collection()
 
 // Class vs Data Class
 class PersonClass(val name: String, var age: Int)
 
-data class PersonDataClass(val name: String, var age: Int)
+data class PersonDataClass(
+    val name: String,
+    var age: Int) {
+
+    fun transformName(): String {
+        return "Mr. $name"
+    }
+}
 
 fun classVsDataClass() {
     val mike = PersonClass("Mike", 23)
     val anotherMike = PersonClass("Mike", 23)
 // -===================== Comparable between object =================================-
-    println("Is ${mike.name} and ${anotherMike.name} the same person? -> ${mike.equals(anotherMike)}")
+    println("Is ${mike.name} and ${anotherMike.name} the same person? " +
+            "-> ${mike.equals(anotherMike)}")
 
     val mikeData = PersonDataClass("Data Mike", 23)
     val anotherMikeData = PersonDataClass("Data Mike", 23)
-    println("Is ${mikeData.name} and ${anotherMikeData.name} the same person? -> ${mikeData.equals(anotherMikeData)}")
+    println("Is ${mikeData.name} and ${anotherMikeData.name} the same person? " +
+            "-> ${mikeData.equals(anotherMikeData)}")
 
 // -===================== Print object to string =================================-
     println(mike.toString())
     println(mikeData.toString())
+
+    println(mikeData.transformName())
 
 // -===================== Copying objects =================================-
     val jakeData = mikeData.copy(name = "Jake")
@@ -92,7 +121,7 @@ fun classVsDataClass() {
     val (mikeName, mikeAge) = mikeData
     val (jakeName, jakeAge) = jakeData
 }
-//classVsDataClass()
+classVsDataClass()
 
 
 // Functions
@@ -144,18 +173,20 @@ fun switchCaseCousin() {
         else -> println("x is not 1 or 2")
     }
 }
-//switchCaseCousin()
+switchCaseCousin()
 
-fun coolerWhen() {
-    val x = 10
-    val y = 9
-    when {
-        x == 10 -> println("x == $x")
-        y == 9 -> println("y == $y")
-        else -> println("why you do this?")
+fun coolerWhen(): String {
+    val x = 0
+    val y = 0
+    val z = 0
+    return when {
+        z == 8 -> "z == $z"
+        y == 9 -> "y == $y"
+        x == 10 -> "x == $x"
+        else -> "why you do this?"
     }
 }
-//coolerWhen()
+println(coolerWhen())
 
 // Operator
 fun rightOfAnd(): Boolean {
@@ -224,7 +255,7 @@ fun skippyRange() {
 
 //rangeInLoop()
 //findValueInRange()
-//skippyRange()
+skippyRange()
 
 // Null safety - Variables with nullable types
 var fullName: String? = null
