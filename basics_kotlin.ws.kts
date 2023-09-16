@@ -244,7 +244,7 @@ println(nullName ?: "top with elvis")
 // Safe Call
 val safeValueWithNull: String? = null
 val safeResponse = safeValueWithNull ?: "It's null, baka!"
-val safeButImError = safeValueWithNull ?: throw Error()
+//val safeButImError = safeValueWithNull ?: throw Error()
 
 println(safeResponse)
 
@@ -260,7 +260,7 @@ println("Hi my name length is $namelength and I'm $realAge year old")
 
 // Unsafe Calls
 val unsafe: String? = null
-println(unsafe!!.length)
+//println(unsafe!!.length)
 
 // Scope function
 
