@@ -2,7 +2,7 @@
 fun main() {
     println("Hello World")
 }
-//main()
+main()
 
 // Basic Type
 fun basicTypes(): Any {
@@ -30,7 +30,7 @@ fun variable(): String {
 
 fun valued(): String {
     val valued: String = "assign here!"
-    valued = "can I?"
+//    valued = "can I?"
     return valued
 }
 //valued()
